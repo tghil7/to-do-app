@@ -1,8 +1,7 @@
-def greet():
-    message = "hello"
+def greet(message):
     message = message.capitalize()
     return message
 
 
-greeting = greet()
+greeting = greet("hello, this is my message")
 print(greeting)

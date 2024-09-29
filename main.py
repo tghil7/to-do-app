@@ -4,20 +4,25 @@ def get_todos(filepath):
     return my_todos
 
 
-def write_todos(filepath, new_task):
+def append_todos(filepath, new_task):
     with open(filepath, "a") as file:
         file.write('\n')
         file.writelines(new_task)
 
 
+def write_todos(filepath, this_todo):
+    with open("todos.txt", "w") as file:
+        file.writelines(this_todo)
+
+
 while True:
-    user_action = input('Type add, show, edit, complete or exit: ')
+    user_action = input('Type add, show, edit, delete or exit: ')
 
     user_action = user_action.strip()
     if user_action.startswith("add"):
         # Read user's actions starting at index 4
         todo = [user_action[4:]]
-        write_todos('todos.txt', todo)
+        append_todos('todos.txt', todo)
 
     elif user_action.startswith("show"):
         # Read user's actions starting at index 5
@@ -28,6 +33,19 @@ while True:
             print(line, end='')
         print('\n')
 
+    elif user_action.startswith('delete'):
+        try:
+            # Read user's actions starting at index 4
+            number = int(user_action[7])
+            print(number)
+            todos = get_todos("todos.txt")
+            print('Item to remove:{0}'.format(todos[number]))
+            todos.remove(todos[number])
+            write_todos("todos.txt", todos)
+        except ValueError:
+            print("Your command is not valid.")
+            continue
+
     elif user_action.startswith('edit'):
         try:
             # Read user's actions starting at index 4
@@ -35,10 +53,10 @@ while True:
             print(number)
             todos = get_todos("todos.txt")
             new_todo = input("Enter new todo:")
-            print('Number to remove:{0}'.format(todos[number]))
+            print('Item to remove:{0}'.format(todos[number]))
             todos.remove(todos[number])
             todos.insert(number, new_todo)
-            write_todos("todos.txt", new_todo)
+            write_todos("todos.txt", todos)
         except ValueError:
             print("Your command is not valid.")
             continue
@@ -52,7 +70,3 @@ while True:
 
     elif user_action.startswith("exit"):
         exit(0)
-
-
-
-

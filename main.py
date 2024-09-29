@@ -12,6 +12,7 @@ def append_todos(filepath, new_task):
 
 def write_todos(filepath, this_todo):
     with open("todos.txt", "w") as file:
+        file.write('\n')
         file.writelines(this_todo)
 
 
@@ -41,7 +42,9 @@ while True:
             todos = get_todos("todos.txt")
             print('Item to remove:{0}'.format(todos[number]))
             todos.remove(todos[number])
+            # Need to find a way to change the size of an array
             write_todos("todos.txt", todos)
+            print('\n Length of the list:{0}'.format(len(todos)))
         except ValueError:
             print("Your command is not valid.")
             continue
